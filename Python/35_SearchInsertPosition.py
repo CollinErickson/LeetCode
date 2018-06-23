@@ -12,12 +12,11 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        for i in range(len(nums)):
-            if nums[i] == target:
+        lennums = len(nums)
+        for i in range(lennums):
+            if nums[i] >= target:
                 return i
-            if nums[i] > target:
-                return i
-        return len(nums)
+        return lennums
 c1 = Solution()
 print (c1.searchInsert([1,3,5,6], 5), 2)
 print (c1.searchInsert([1,3,5,6], 2), 1)
