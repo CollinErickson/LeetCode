@@ -11,4 +11,13 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        
+        print s
+        if len(s) <= 1:
+            return 0
+        for i in range(len(s)-1):
+            if s[i] == "(" and s[i+1] == ")":
+                return 1 + self.longestValidParentheses(s[0:i] + s[(i+2):len(s)])
+        return 0
+sol = Solution()
+print sol.longestValidParentheses("(())"), 2
+print sol.longestValidParentheses(")()())"), 4
