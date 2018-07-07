@@ -11,6 +11,7 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
+        verbose=False
         #print s
         if len(s) <= 1:
             return 0
@@ -21,28 +22,55 @@ class Solution(object):
         longest_valid = 0
         q = LifoQueue()
         for i in range(len(s)):
-            #print i,
+            if verbose:
+                            print i, longest_valid,
             si = s[i]
             if q.empty():
-                #print "put on empty"
-                q.put(si)
-            else:
+                if verbose:
+                            print "put on empty"
+                q.put((si, i))
+            else: # Queue is not empty
                 if si == "(":
                     # ERROR HERE, can't just add them in middle of sequence
                     #  track when it was put in, then check that when taking out
-                    #print "put"
-                    q.put("(")
-                else:
-                    qget = q.get()
-                    #print 'qget', qget
+                    if verbose:
+                            print "put"
+                    q.put(("(", i))
+                    current_valid = 0
+                else: # si == ")"
+                    qget, iget = q.get()
+                    if verbose:
+                            print 'qget', qget, iget,
                     if qget == "(":
-                        current_valid += 2
-                    else:
+                        if verbose:
+                            print "get match"
+                        #current_valid += 2
+                        #longest_valid = max(longest_valid, current_valid)
+                        if q.empty():
+                            #print longest_valid, i, "hereee"
+                            longest_valid = max(longest_valid, i+1) #current_valid)
+                        else: # q not empty, no match to ), so last
+                            qlast, ilast = q.get()
+                            longest_valid = max(longest_valid, i - ilast)
+                            q.put((qlast, ilast))
+                    else: # qget is ), end streak
                         # bad
-                        #print 'reset'
-                        longest_valid = max(longest_valid, current_valid)
+                        if verbose:
+                            print 'reset', i, iget
+                        #if q.empty():
+                        #    longest_valid = max(longest_valid, i+1) #current_valid)
+                        #else: # q not empty, no match to ), so last
+                        #qlast, ilast = q.get()
+                        longest_valid = max(longest_valid, i - iget - 1)
+                        #q.put((qlast, ilast))
+                        q.put((qget, iget))
+                        q.put((")", i))
+                        #longest_valid = max(longest_valid, i - iget)
+                        #longest_valid = max(longest_valid, i - 1 - iget)
                         current_valid = 0
                         #q = LifoQueue()
+        if not q.empty():
+            current_valid = len(s) - 1 - q.get()[1]
         longest_valid = max(longest_valid, current_valid)
         return longest_valid
 
@@ -51,4 +79,9 @@ print sol.longestValidParentheses("(()"), 2
 print sol.longestValidParentheses("(())"), 4
 print sol.longestValidParentheses(")()())"), 4
 print sol.longestValidParentheses("(())()())))(((((())))()())()((("), 16
+print sol.longestValidParentheses("()(()))"), 6
 print sol.longestValidParentheses("()(()"), 2
+print sol.longestValidParentheses("()(())"), 6
+print sol.longestValidParentheses("((()()"), 4
+print sol.longestValidParentheses("(()))))(()()()()((((()))()()))))))))))"), 24
+#print sol.longestValidParentheses("(())))"), 4
