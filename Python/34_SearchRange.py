@@ -13,10 +13,17 @@ class Solution(object):
         :rtype: List[int]
         """
         lennums = len(nums)
-        right = -1
-        left = lennums
-        diff = lennums/2
+        # dumb cases
+        if lennums == 0:
+            return [-1,-1]
+        if lennums == 1:
+            if nums[0] == target:
+                return [0,0]
+            else:
+                return [-1,-1]
         # Get left first
+        if nums[0] > target or nums[lennums-1] < target:
+            return [-1,-1]
         if nums[0] == target:
             left = 0
         else:
@@ -34,21 +41,37 @@ class Solution(object):
                 left = leftupper
             else:
                 left = -1
-            #diff = int(math.pow(math.ceil(math.log(lennums/2)), 2))
-            #ii = diff # lennums / 2 - 1
-            #while diff >=1:
-            #    diff //= 2
-            #    print diff, ii
-            #    if ii >= lennums:
-            #        left = -1
-            #    elif nums[ii] <= target:
-            #        ii += diff
-            #    else:
-            #        ii -= diff
-            #left = 333
+        if nums[lennums-1] == target:
+            right = lennums - 1
+        else:
+            rightlower = left
+            rightupper = lennums - 1
+            while rightlower < rightupper:
+                #print "right", rightlower, rightupper
+                if rightupper - rightlower == 1:
+                    break
+                tempind = rightlower + (rightupper - rightlower) // 2
+                if nums[tempind] > target:
+                    rightupper = tempind
+                else:
+                    rightlower = tempind
+            if nums[rightlower] == target:
+                right = rightlower
+            else:
+                right = -1
         return [left, right]
-    def binarySearch(self, nums, target):
-        pass
 sol = Solution()
 print sol.searchRange(nums = [5,7,7,8,8,10], target = 8), [3,4]
 print sol.searchRange(nums = [5,7,7,8,8,10], target = 6), [-1,-1]
+print sol.searchRange(nums = [5,7,7,8,8,10], target = 7), [1,2]
+print sol.searchRange(nums = [5,7,7,8,8,10], target = 10), [5,5]
+print sol.searchRange(nums = [5,7,7,8,8,10], target = 4), [-1,-1]
+print sol.searchRange(nums = [5,7,7,8,8,10], target = 11), [-1,-1]
+print sol.searchRange(nums = [5,7,7,8,8,10], target = 3), [-1,-1]
+print sol.searchRange(nums = [], target = 0), [-1,-1]
+print sol.searchRange(nums = [0], target = 0), [0,0]
+print sol.searchRange(nums = [1], target = 0), [-1,-1]
+print sol.searchRange(nums = [0,0], target = 0), [0,1]
+print sol.searchRange(nums = [0,1], target = 0), [0,0]
+print sol.searchRange(nums = [-1,0], target = 0), [1,1]
+print sol.searchRange(nums = [1,2], target = 0), [-1,-1]
