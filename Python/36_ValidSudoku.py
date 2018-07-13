@@ -20,6 +20,27 @@ class Solution(object):
                     print i, j
                     return False
                 s.add(bij)
+        # Check down columns
+        for j in range(9):
+            s = set()
+            for i in range(9):
+                bij = board[i][j]
+                if bij!= "." and bij in s:
+                    print i, j
+                    return False
+                s.add(bij)
+        # Check 3x3 squares
+        for i in range(3):
+            for j in range(3):
+                s = set()
+                for k in range(3):
+                    for l in range(3):
+                        bijkl = board[i*3+k][j*3+l]
+                        if bijkl!= "." and bijkl in s:
+                            print i, j
+                            return False
+                        s.add(bijkl)
+                        
         return True
 sol = Solution()
 print sol.isValidSudoku([
@@ -37,6 +58,18 @@ print sol.isValidSudoku([
 print sol.isValidSudoku([
   ["8","3",".",".","7",".",".",".","."],
   ["6",".",".","1","9","5",".",".","."],
+  [".","9","8",".",".",".",".","6","."],
+  ["8",".",".",".","6",".",".",".","3"],
+  ["4",".",".","8",".","3",".",".","1"],
+  ["7",".",".",".","2",".",".",".","6"],
+  [".","6",".",".",".",".","2","8","."],
+  [".",".",".","4","1","9",".",".","5"],
+  [".",".",".",".","8",".",".","7","9"]
+]), False
+    
+print sol.isValidSudoku([
+  ["5","3",".",".","7",".",".",".","."],
+  ["6",".","3","1","9","5",".",".","."],
   [".","9","8",".",".",".",".","6","."],
   ["8",".",".",".","6",".",".",".","3"],
   ["4",".",".","8",".","3",".",".","1"],
