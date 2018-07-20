@@ -11,7 +11,18 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        
+        ln = len(nums)
+        firstnotchecked = 0
+        lastplace = ln - 1
+        itocheck = 0
+        while itocheck < ln:
+            x = nums[itocheck]
+            if x > lastplace:
+                tx = nums[lastplace]
+                nums[lastplace] = x
+                nums[itocheck] = tx
+                continue
+            else: # within range still
         return
 sol = Solution()
 print sol.firstMissingPositive([1,2,0]), 3
