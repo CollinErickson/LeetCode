@@ -14,30 +14,24 @@ class Solution(object):
         """
         ls = len(s)
         lp = len(p)
-        if ls ==0 and lp==0:
-            return True
-        if ls>0 and lp==0:
-            return False
-        if ls==0 and lp>0:
-            for j in range(lp):
-                if p[j] != "*":
-                    return False
-                return True
-        m = [[False for j in range(lp)] for i in range(ls)]
-        m[0][0] = (s[0] == p[0] or p[0]=='*' or p[0]=='?')
-        for i in range(ls):
-            for j in range(lp):
-                #print i,j
-                #for mr in m:print mr
-                if i > 0 and (m[i-1][j] and p[j]=="*"):
-                    m[i][j] = True
-                if i>0 and j>0 and m[i-1][j-1] and (p[j] == "?" or p[j] == "*" or s[i] == p[j]):
-                    m[i][j] = True
-                #if j>0 and m[i][j-1] and (p[j-1]=="*" and (p[j]=="*" or p[j]==s[i])):
-                #    m[i][j] = True
-                if j>0 and (m[i][j-1] and p[j]=="*"):
-                    m[i][j] = True
-        return m[ls-1][lp-1]
+        #if ls ==0 and lp==0:
+        #    return True
+        #if ls>0 and lp==0:
+        #    return False
+        #if ls==0 and lp>0:
+        #    for j in range(lp):
+        #        if p[j] != "*":
+        #            return False
+        #        return True
+        m = [[False for j in range(lp+1)] for i in range(ls+1)]
+        m[0][0] = True # (s[0] == p[0] or p[0]=='*' or p[0]=='?')
+        for i in range(ls+1):
+            for j in range(1, lp+1):
+                if p[j-1] == "*":
+                    m[i][j] = m[i][j-1] or (i>0 and m[i-1][j])
+                elif i>0 and (s[i-1]==p[j-1] or p[j-1]=="?"):
+                    m[i][j] = m[i-1][j-1]
+        return m[ls][lp]
     
 sol = Solution()
 print sol.isMatch(s = "aa", p = "a"), False
