@@ -58,6 +58,22 @@ class Solution(object):
             if done:
                 break
             if nochange and nochangelastiter:
+                # REDOING THIS HERE TO BE DUMB, just pick a working value
+                contout = False
+                for i in range(9):
+                    for j in range(9):
+                        if board[i][j] == ".":
+                            #print 'pop', i, j, poss[i][j]
+                            poss[i][j] = set([poss[i][j].pop()])
+                            contout = True
+                        if contout:
+                            break
+                    if contout:
+                        break
+                
+                
+                continue
+                
                 # Need to check if there are groups where only one value possible
                 # Check across rows
                 for i in range(9):
@@ -67,7 +83,7 @@ class Solution(object):
                             poss_counts[int(p)-1] += 1
                     #if iteration <= 997 and i ==0:
                     #    print "here", poss_counts
-                    print "poss_counts", i, poss_counts
+                    #print "poss_counts", i, poss_counts
                     for j in range(9):
                         if poss_counts[j] == 1:
                             for k in range(9):
@@ -84,7 +100,7 @@ class Solution(object):
                             poss_counts[int(p)-1] += 1
                     #if iteration <= 997 and i ==0:
                     #    print "here", poss_counts
-                    print "poss_counts column", i, poss_counts
+                    #print "poss_counts column", i, poss_counts
                     for j in range(9):
                         if poss_counts[j] == 1:
                             for k in range(9):
@@ -93,12 +109,14 @@ class Solution(object):
                                     poss[k][i] = []
                                     self.update_poss(k,i, board, poss)
                                     nochange = False
-                                    print "THIS_WORKED NOW"
+                                    #print "THIS_WORKED NOW"
                 # NEED in boxes next here
             nochangelastiter = nochange
+        else:
+            pass
         return poss
     def update_poss(self, i, j, board, poss):
-        self.pprint(board)
+        #self.pprint(board)
         for k in range(9): #[l for l in range(9) if (l!=i and board[l][j]==".")]:
             if k != i and board[k][j]==".":
                 #print i,j,k, poss[k][j]
@@ -161,4 +179,5 @@ brd2 = [[".",".","9","7","4","8",".",".","."],["7",".",".",".",".",".",".",".","
         [".",".",".","8",".","3",".","2","."],[".",".",".",".",".",".",".",".","6"],
         [".",".",".","2","7","5","9",".","."]]
 po2 = sol.solveSudoku(brd2)
-print brd2
+#for b in brd2: print b #print brd2
+sol.pprint(brd2)
