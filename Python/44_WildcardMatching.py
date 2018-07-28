@@ -12,6 +12,16 @@ class Solution(object):
         :type p: str
         :rtype: bool
         """
+        ls = len(s)
+        lp = len(p)
+        m = [[False for j in range(lp)] for i in range(ls)]
+        m[0][0] = True
+        for i in range(ls):
+            for j in range(ls):
+                if i > 0 and (m[i-1][j] and p[j]=="*"):
+                    m[i][j] = True
+                if i>0 and m[i-1][j-1] and (p[j] == "?" or p[j] == "*" or s[i] == p[j]):
+                    m[i][j] = True
         return
     
 sol = Solution()
