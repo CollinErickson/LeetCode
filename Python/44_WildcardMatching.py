@@ -14,15 +14,6 @@ class Solution(object):
         """
         ls = len(s)
         lp = len(p)
-        #if ls ==0 and lp==0:
-        #    return True
-        #if ls>0 and lp==0:
-        #    return False
-        #if ls==0 and lp>0:
-        #    for j in range(lp):
-        #        if p[j] != "*":
-        #            return False
-        #        return True
         m = [[False for j in range(lp+1)] for i in range(ls+1)]
         m[0][0] = True # (s[0] == p[0] or p[0]=='*' or p[0]=='?')
         for i in range(ls+1):
