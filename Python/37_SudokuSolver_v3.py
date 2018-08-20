@@ -105,7 +105,7 @@ class Solution(object):
             nochangelastiter = nochange
         else:
             self.solve(board)
-        return poss
+        return #poss
     def update_poss(self, i, j, board, poss):
         #self.pprint(board)
         for k in range(9): #[l for l in range(9) if (l!=i and board[l][j]==".")]:
