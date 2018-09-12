@@ -13,5 +13,10 @@ class Solution(object):
         """
         s = []
         return
+    def isValid(n, queens, checklastrow):
+        for i in range(n):
+            if abs(queens[i] - checklastrow) == i or queens[i]==checklastrow:
+                return False
+        return True
 sol = Solution()
 print(sol.solveNQueens(4))
