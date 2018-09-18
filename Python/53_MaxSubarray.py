@@ -11,8 +11,17 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        
-        return 1
+        cursum = 0
+        maxcursum = nums[0]
+        for i in nums:
+            cursum += i
+            maxcursum = max(maxcursum, cursum)
+            if cursum < 0:
+                cursum = 0
+        return maxcursum
     
 sol = Solution()
 print(sol.maxSubArray([-2,1,-3,4,-1,2,1,-5,4]), 6)
+print(sol.maxSubArray([-1]), -1)
+print(sol.maxSubArray([-1, -1]), -1)
+print(sol.maxSubArray([-1,0]), 0)
