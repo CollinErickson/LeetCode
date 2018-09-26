@@ -27,16 +27,19 @@ class Solution(object):
         while n.next is not None:
             l += 1
             n = n.next
+        k = k % l
+        if k == 0:
+            return head
         n = head
-        for i in range(k):
+        for i in range(l - k):
             n = n.next
         newhead = n
-        print('newhead is', newhead)
+        #print('newhead is', newhead)
         while n.next is not None:
             n = n.next
-        print('n is', n)
+        #print('n is', n)
         n.next = head
-        for i in range(k):
+        for i in range(l-k):
             
             n = n.next
         n.next = None
@@ -63,3 +66,12 @@ n2.next = n3
 n3.next = n4
 n4.next = n5
 print(sol.rotateRight(n1,2), "\n4->5->1->2->3->NULL")
+n5 = ListNode(5)
+print(sol.rotateRight(n5,0), "\n5->NULL")
+
+n1 = ListNode(1)
+n2 = ListNode(2)
+n3 = ListNode(3)
+n1.next = n2
+n2.next = n3
+print(sol.rotateRight(n1,4), "\n3->1->2->NULL")
