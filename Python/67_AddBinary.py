@@ -18,23 +18,23 @@ class Solution(object):
         out = []
         carry = 0
         while True:
-            if i <= len(a):
-                print('first', len(a) - i - 1, i, int(a[len(a) - i - 1]), int(b[len(a) - i - 1]), int(carry))
-                tmp = int(a[len(a) - i - 1]) + int(b[len(a) - i - 1]) + int(carry)
+            if i < len(a):
+                #print('first', len(a) - i - 1, i, int(a[len(a) - i - 1]), int(b[len(b) - i - 1]), int(carry))
+                tmp = int(a[len(a) - i - 1]) + int(b[len(b) - i - 1]) + int(carry)
             else:
-                print(i, int(b[len(a) - i - 1]), int(carry))
-                tmp = int(b[len(a) - i - 1]) + int(carry)
-                print('temp', tmp, tmp //2, tmp%2, out)
+                #print(i, int(b[len(a) - i - 1]), int(carry))
+                tmp = int(b[len(b) - i - 1]) + int(carry)
+                #print('temp', tmp, tmp //2, tmp%2, out)
             if tmp>1:
                 carry = tmp // 2
                 tmp = tmp % 2
             else:
                 carry = 0
             i = i + 1
-            if i > len(b):
-                break
             out.append(tmp)
-        print('postadd', carry, tmp)
+            if i >= len(b):
+                break
+        #print('postadd', carry, tmp)
         if carry > 0:
             out.append(carry)
         out.reverse()
@@ -47,3 +47,4 @@ sol = Solution()
 print(sol.addBinary('11','1'), '100')
 print(sol.addBinary('1010','1011'), '10101')
 print(sol.addBinary('1111','1111'), '11110')
+print(sol.addBinary('100','110010'), '110110')
