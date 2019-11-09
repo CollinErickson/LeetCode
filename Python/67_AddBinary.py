@@ -16,18 +16,29 @@ class Solution(object):
             return self.addBinary(b, a)
         i = 0
         out = []
-        carry = False
+        carry = 0
         while True:
-            
             if i <= len(a):
+                print('first', len(a) - i - 1, i, int(a[len(a) - i - 1]), int(b[len(a) - i - 1]), int(carry))
                 tmp = int(a[len(a) - i - 1]) + int(b[len(a) - i - 1]) + int(carry)
+            else:
+                print(i, int(b[len(a) - i - 1]), int(carry))
+                tmp = int(b[len(a) - i - 1]) + int(carry)
+                print('temp', tmp, tmp //2, tmp%2, out)
             if tmp>1:
-                tmp = 0
-                carry = True
+                carry = tmp // 2
+                tmp = tmp % 2
+            else:
+                carry = 0
             i = i + 1
             if i > len(b):
                 break
             out.append(tmp)
+        print('postadd', carry, tmp)
+        if carry > 0:
+            out.append(carry)
+        out.reverse()
+        out = ('').join([str(a) for a in out])
         return out
     def addBinary2(self, a, b):
         x = bin(int(a, 2) + int(b, 2))
@@ -35,3 +46,4 @@ class Solution(object):
 sol = Solution()
 print(sol.addBinary('11','1'), '100')
 print(sol.addBinary('1010','1011'), '10101')
+print(sol.addBinary('1111','1111'), '11110')
