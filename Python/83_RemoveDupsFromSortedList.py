@@ -17,10 +17,13 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        print('dd', head.val)
+        #print('dd', head.val, lastnode.val if lastnode is not None else 'nolast')
         node = head
         if node.next is None:
             print('a')
+            if lastnode is not None:
+                if head.val == lastnode.val:
+                    lastnode.next = None
             if truehead is None:
                 return head
             return truehead
@@ -76,5 +79,14 @@ n2 = ListNode(1)
 n1.next = n2
 n3 = ListNode(2)
 n2.next = n3
+n4 = ListNode(3)
+n3.next = n4
+n5 = ListNode(3)
+n4.next = n5
+s1 = sol.deleteDuplicates(n1)
+t1 = s1
+while t1 is not None:
+    print('cc', t1.val)
+    t1 = t1.next
 
-
+n0 = ListNode(0)
