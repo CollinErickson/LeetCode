@@ -17,6 +17,8 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
+        if head is None and truehead is None:
+            return None
         #print('dd', head.val, lastnode.val if lastnode is not None else 'nolast')
         node = head
         if node.next is None:
