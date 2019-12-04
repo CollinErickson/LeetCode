@@ -5,6 +5,15 @@ class Solution(object):
         :type word: str
         :rtype: bool
         """
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if board[i][j] == word[0]:
+                    if len(word) == 1:
+                        return True
+                    self.check4(board, word[1:len(word)], i, j)
+        
+        return
+    def check4(board, word, i, j):
         
         return
 
