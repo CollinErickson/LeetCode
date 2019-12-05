@@ -10,12 +10,44 @@ class Solution(object):
                 if board[i][j] == word[0]:
                     if len(word) == 1:
                         return True
-                    self.check4(board, word[1:len(word)], i, j)
+                    if self.check4(board, word[1:len(word)], i, j):
+                        return True
         
-        return
-    def check4(board, word, i, j):
-        
-        return
+        return False
+    def check4(self, board, word, i, j):
+        print('c4', i, j)
+        if len(word) == 0:
+            return True
+        board[i][j] = ''
+        if i < len(board)-1:
+            if board[i+1][j] == word[0]:
+                if len(word) > 1:
+                    if self.check4(board, word[1:len(word)], i+1, j):
+                        return True
+                else:
+                    return True
+        if i>0:
+            if board[i-1][j] == word[0]:
+                if len(word) > 1:
+                    if self.check4(board, word[1:len(word)], i-1, j):
+                        return True
+                else:
+                    return True
+        if j < len(board[0])-1:
+            if board[i][j+1] == word[0]:
+                if len(word) > 1:
+                    if self.check4(board, word[1:len(word)], i, j+1):
+                        return True
+                else:
+                    return True
+        if j>0:
+            if board[i][j-1] == word[0]:
+                if len(word) > 1:
+                    if self.check4(board, word[1:len(word)], i, j-1):
+                        return True
+                else:
+                    return True
+        return False
 
 sol = Solution()
 print(sol.exist([
@@ -32,4 +64,4 @@ print(sol.exist([
   ['A','B','C','E'],
   ['S','F','C','S'],
   ['A','D','E','E']
-], 'ABCB'), True)
+], 'ABCB'), False)
