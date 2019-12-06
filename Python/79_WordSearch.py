@@ -1,3 +1,4 @@
+import copy
 class Solution(object):
     def exist(self, board, word):
         """
@@ -8,17 +9,20 @@ class Solution(object):
         for i in range(len(board)):
             for j in range(len(board[0])):
                 if board[i][j] == word[0]:
+                    #print('starting on', i, j, board)
                     if len(word) == 1:
                         return True
                     if self.check4(board, word[1:len(word)], i, j):
                         return True
         
         return False
-    def check4(self, board, word, i, j):
-        print('c4', i, j)
+    def check4(self, board0, word, i, j):
+        board = copy.deepcopy(board0) # Need to copy it
+        #print('c4', i, j)
         if len(word) == 0:
             return True
         board[i][j] = ''
+        #print('did board change?', board0, board)
         if i < len(board)-1:
             if board[i+1][j] == word[0]:
                 if len(word) > 1:
@@ -65,3 +69,5 @@ print(sol.exist([
   ['S','F','C','S'],
   ['A','D','E','E']
 ], 'ABCB'), False)
+print(sol.exist([["C","A","A"],["A","A","A"],["B","C","D"]], 
+                'AAB'), True)
