@@ -23,8 +23,6 @@ class Solution(object):
                 nums[lastkeepind] = num
                 lastkeepind += 1
                 keepcount += 1
-                nums[lastkeepind] = num
-                pass
             else:
                 pass
             #print(num, lastnum, lastnumcount, keep)
@@ -36,4 +34,8 @@ class Solution(object):
 sol = Solution()
 a1 = [1,1,1,2,2,3]
 print(sol.removeDuplicates(a1), 5)
+print(a1)
+
+a1 = [1]
+print(sol.removeDuplicates(a1), 1)
 print(a1)
