@@ -28,6 +28,27 @@ class Solution(object):
             else:
                 return self.search(nums[(lennums/2):lennums], target, offset+lennums/2)
         return "error"
+    def binary_index(self, nums):
+        # find where split in nums is
+        # [3,4,5,0,1,1] should return 3
+        lennums = len(nums)
+        if lennums == 0:
+            return "error 0"
+        if lennums == 1:
+            return 0
+        curindex = 0
+        shiftright = lennums // 2
+        while True:
+            print("w:", curindex, shiftright)
+            if nums[curindex + shiftright] >= nums[0]:
+                curindex += shiftright
+            if nums[curindex + shiftright - 1] >= nums[curindex + shiftright]:
+                return curindex + shiftright
+            shiftright = shiftright // 2
+            if shiftright == 0:
+                return "failed"
+        return "failed2"
+        
     def binary(self, nums, target, offset=0):
         #print "binary: ", nums, target, offset
         # nums is sorted array
@@ -44,4 +65,9 @@ class Solution(object):
 
 
 sol = Solution()
-print(sol.search(nums = [2,5,6,0,0,1,2], target = 0), True)
+#print(sol.search(nums = [2,5,6,0,0,1,2], target = 0), True)
+print(sol.binary_index(nums = [1,0]), 1)
+print(sol.binary_index(nums = [2,5,6,0,0,1,2]), 3)
+print(sol.binary_index(nums = [2,5,6,6,9,0,0,1,2]), 5)
+
+
