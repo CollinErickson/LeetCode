@@ -5,8 +5,13 @@ class Solution(object):
         :type target: int
         :rtype: bool
         """
-        
-        
+        ind = self.binary_index(nums)
+        if ind < 0:
+            return self.search_inside(nums=nums, target=target)
+        if target < nums[0]:
+            return ind + self.search_inside(nums=nums[ind:len(nums)], target=target)
+        return self.search_inside(nums=nums[0:ind], target=target)
+    def search_inside(self, nums, target, offset=0):
         #print "search: ", nums, target, offset
         lennums = len(nums)
         if lennums == 0:
@@ -23,10 +28,11 @@ class Solution(object):
             else:
                 return self.binary(nums[(lennums/2):lennums], target, offset+lennums/2)
         else:
-            if target >= nums[0] and target < nums[lennums / 2]:
-                return self.binary(nums[0:(lennums/2)], target, offset)
+            print(target, nums, lennums, lennums // 2)
+            if target >= nums[0] and target < nums[lennums // 2]:
+                return self.binary(nums[0:(lennums//2)], target, offset)
             else:
-                return self.search(nums[(lennums/2):lennums], target, offset+lennums/2)
+                return self.search(nums[(lennums//2):lennums], target, offset+lennums/2)
         return "error"
     def binary_index(self, nums):
         # find where split in nums is
@@ -73,11 +79,19 @@ class Solution(object):
 
 sol = Solution()
 #print(sol.search(nums = [2,5,6,0,0,1,2], target = 0), True)
-print(sol.binary_index(nums = [0,1]), -1)
-print(sol.binary_index(nums = [1,0]), 1)
-print(sol.binary_index(nums = [1,0, 1]), 1)
-print(sol.binary_index(nums = [2,5,6,0,0,1,2]), 3)
-print(sol.binary_index(nums = [2,5,6,6,9,0,0,1,2]), 5)
-print(sol.binary_index(nums = [2,5,6,6,9,10,0,0,1,2,3,3,4]), 6)
+if False:
+    print(sol.binary_index(nums = [0,1]), -1)
+    print(sol.binary_index(nums = [1,0]), 1)
+    print(sol.binary_index(nums = [1,0, 1]), 1)
+    print(sol.binary_index(nums = [2,5,6,0,0,1,2]), 3)
+    print(sol.binary_index(nums = [2,5,6,6,9,0,0,1,2]), 5)
+    print(sol.binary_index(nums = [2,5,6,6,9,10,0,0,1,2,3,3,4]), 6)
+if True:
+    print(sol.search(nums = [0,1], target=1), -1)
+    print(sol.search(nums = [1,0]), 1)
+    print(sol.search(nums = [1,0, 1]), 1)
+    print(sol.search(nums = [2,5,6,0,0,1,2]), 3)
+    print(sol.search(nums = [2,5,6,6,9,0,0,1,2]), 5)
+    print(sol.search(nums = [2,5,6,6,9,10,0,0,1,2,3,3,4]), 6)
 
 
