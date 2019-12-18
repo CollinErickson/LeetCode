@@ -5,12 +5,20 @@ class Solution(object):
         :type target: int
         :rtype: bool
         """
+        if len(nums) == 0:
+            return False
+        if len(nums) == 1:
+            return nums[0] == target
         ind = self.binary_index(nums)
-        if ind < 0:
-            return self.search_inside(nums=nums, target=target)
-        if target < nums[0]:
-            return ind + self.search_inside(nums=nums[ind:len(nums)], target=target)
-        return self.search_inside(nums=nums[0:ind], target=target)
+        #print('ind is', ind)
+        if ind < 0: # already in order
+            target_index = self.search_inside(nums=nums, target=target)
+        elif target < nums[0]: # target in second half
+            target_index = ind + self.search_inside(nums=nums[ind:len(nums)], target=target)
+            
+        else: # target in first half
+            target_index = self.search_inside(nums=nums[0:ind], target=target)
+        return target_index >= 0
     def search_inside(self, nums, target, offset=0):
         #print "search: ", nums, target, offset
         lennums = len(nums)
@@ -24,15 +32,15 @@ class Solution(object):
             
         if nums[lennums // 2] < nums[0]:
             if target >= nums[0] or target < nums[lennums // 2]:
-                return self.search(nums[0:(lennums/2)], target, offset)
+                return self.search_inside(nums[0:(lennums//2)], target, offset)
             else:
-                return self.binary(nums[(lennums/2):lennums], target, offset+lennums/2)
+                return self.search_inside(nums[(lennums//2):lennums], target, offset+lennums/2)
         else:
             #print(target, nums, lennums, lennums // 2)
             if target >= nums[0] and target < nums[lennums // 2]:
-                return self.binary(nums[0:(lennums//2)], target, offset)
+                return self.search_inside(nums[0:(lennums//2)], target, offset)
             else:
-                return self.search(nums[(lennums//2):lennums], target, offset+lennums/2)
+                return self.search_inside(nums[(lennums//2):lennums], target, offset+lennums//2)
         return "error"
     def binary_index(self, nums):
         # find where split in nums is
@@ -42,12 +50,14 @@ class Solution(object):
             return "error 0"
         if lennums == 1:
             return 0
-        if lennums == 1:
-            return -1 if nums[0]<nums[1] else 1
+        if lennums == 2:
+            return -1 if nums[0]<=nums[1] else 1
         curindex = 0
         shiftright = lennums // 2
         while True:
             #print("w:", curindex, shiftright)
+            #if nums[curindex + shiftright] == nums[curindex]:
+                #print('midequal')
             if nums[curindex + shiftright] >= nums[0]:
                 curindex += shiftright
             elif nums[curindex+1] < nums[curindex]:
@@ -93,5 +103,13 @@ if True:
     print(sol.search(nums = [2,5,6,0,0,1,2], target=1), 5)
     print(sol.search(nums = [2,5,6,6,9,0,0,1,2], target=1), 7)
     print(sol.search(nums = [2,5,6,6,9,10,0,0,1,2,3,3,4], target=1), 8)
+    print(sol.search(nums = [2,5,6,0,0,1,2], target=0), 4)
+    print(sol.search(nums = [2,5,6,0,0,1,2], target=4), False)
+    print(sol.search(nums = [], target=5), False)
+    print(sol.search(nums = [0], target=5), False)
+    print(sol.search(nums = [5], target=5), True)
+    print(sol.search(nums = [1,1,1,1,1,1,1,2,0], target=0), True)
+    print(sol.search(nums = [1,2,0,1,1,1,1,1,1], target=0), True)
+    print(sol.search(nums = [1,1], target=0), False)
 
 
