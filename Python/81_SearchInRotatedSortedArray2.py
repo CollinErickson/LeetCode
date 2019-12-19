@@ -14,6 +14,8 @@ class Solution(object):
         if ind < 0: # already in order
             target_index = self.search_inside(nums=nums, target=target)
         elif target < nums[0]: # target in second half
+            if target < nums[ind]: # lower than all in nums
+                return False
             target_index = ind + self.search_inside(nums=nums[ind:len(nums)], target=target)
             
         else: # target in first half
@@ -111,5 +113,6 @@ if True:
     print(sol.search(nums = [1,1,1,1,1,1,1,2,0], target=0), True)
     print(sol.search(nums = [1,2,0,1,1,1,1,1,1], target=0), True)
     print(sol.search(nums = [1,1], target=0), False)
+    print(sol.search(nums = [3,1], target=0), False)
 
 
