@@ -1,3 +1,4 @@
+
 class Solution(object):
     def search(self, nums, target, offset=0):
         """
@@ -60,7 +61,12 @@ class Solution(object):
             #print("w:", curindex, shiftright)
             #if nums[curindex + shiftright] == nums[curindex]:
                 #print('midequal')
-            if nums[curindex + shiftright] >= nums[0]:
+            if nums[curindex + shiftright] == nums[0]:
+                #print('need to check both')
+                b1 = self.binary_index(nums[0:(curindex+shiftright)])
+                b2 = self.binary_index(nums[(curindex+shiftright):len(nums)])
+                return b1 if b1>=0 else b2
+            elif nums[curindex + shiftright] > nums[0]:
                 curindex += shiftright
             elif nums[curindex+1] < nums[curindex]:
                 return curindex+1
