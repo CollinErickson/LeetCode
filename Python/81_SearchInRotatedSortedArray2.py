@@ -11,19 +11,21 @@ class Solution(object):
         if len(nums) == 1:
             return nums[0] == target
         ind = self.binary_index(nums)
-        #print('ind is', ind)
+        print('ind is', ind, nums)
         if ind < 0: # already in order
             target_index = self.search_inside(nums=nums, target=target)
         elif target < nums[0]: # target in second half
             if target < nums[ind]: # lower than all in nums
                 return False
-            target_index = ind + self.search_inside(nums=nums[ind:len(nums)], target=target)
+            si = self.search_inside(nums=nums[ind:len(nums)], target=target)
+            target_index = (ind + si) if si>=0 else -1
             
         else: # target in first half
             target_index = self.search_inside(nums=nums[0:ind], target=target)
+            #print('h1')
         return target_index >= 0
     def search_inside(self, nums, target, offset=0):
-        #print "search: ", nums, target, offset
+        #print("search: ", nums, target, offset)
         lennums = len(nums)
         if lennums == 0:
             return -1
@@ -57,8 +59,9 @@ class Solution(object):
             return -1 if nums[0]<=nums[1] else 1
         curindex = 0
         shiftright = lennums // 2
+        shiftright = math.ceil(1.*3/2)
         while True:
-            #print("w:", curindex, shiftright)
+            #print("w:", curindex, shiftright, nums)
             #if nums[curindex + shiftright] == nums[curindex]:
                 #print('midequal')
             if nums[curindex + shiftright] == nums[0]:
@@ -74,10 +77,11 @@ class Solution(object):
                 #print('r:', curindex, shiftright)
                 return curindex + shiftright
             shiftright = shiftright // 2
-            while curindex + shiftright > lennums:
+            #print('while:', curindex, shiftright, lennums)
+            while curindex + shiftright >= lennums:
                 shiftright = shiftright // 2
             if shiftright == 0:
-                return -1
+                return -1 #curindex if nums[curindex]==target else -1
         return "failed2"
         
     def binary(self, nums, target, offset=0):
@@ -120,5 +124,7 @@ if True:
     print(sol.search(nums = [1,2,0,1,1,1,1,1,1], target=0), True)
     print(sol.search(nums = [1,1], target=0), False)
     print(sol.search(nums = [3,1], target=0), False)
+    print(sol.search(nums = [3,1], target=2), False)
+    print(sol.search(nums = [1,1,3], target=1), True)
 
 
