@@ -19,15 +19,30 @@ class ListNode(object):
          return r
 
 class Solution(object):
-    def deleteDups(self, head):
+    def deleteDuplicates(self, head):
         returnhead = None
         returnnode = None
         if head is None:
             return None
-        returnhead = head
-        lastval = head.val
+        if head.next is None:
+            return head
+        # Has at least two nodes
+        if head.val == head.next.val:
+            while head.next is not None and head.val == head.next.val:
+                head = head.next
+            if head.next is None:
+                return None
+            head = head.next
+            returnhead = head
+        else:
+            returnhead = head
+        #returnhead = head
+        returnnode = returnhead
+        #
         
-    def deleteDuplicates(self, head, realhead=None, prev_val=None, prev_node=None):
+        lastval = head.val
+        return returnhead
+    def deleteDuplicatesOld(self, head, realhead=None, prev_val=None, prev_node=None):
         """
         :type head: ListNode
         :rtype: ListNode
