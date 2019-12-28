@@ -11,23 +11,24 @@ class Solution(object):
         :type heights: List[int]
         :rtype: int
         """
-        if (len(heights) == 0):
+        if len(heights) == 0:
             return 0
-        maxarea = 0
+        max_area = 0
         st = []
         for i in range(len(heights)):
             h = heights[i]
-            if len(st) == 0:
-                st.append(heights[i])
-            else:
-                width = 0
-                print(st)
-                while (len(st) > 0) and st[-1] >= heights[i]:
-                    width += 1
-                    p = st.pop()
-                    area = width * p
-                    maxarea = max(maxarea, area)
-        return maxarea
+            new_x = i
+            while len(st) > 0 and st[-1][0] > h:
+                old_h, old_x = st.pop()
+                max_area = max(max_area, (i-old_x)*old_h)
+                new_x = min(old_x, new_x)
+            if len(st) == 0 or st[-1][0] < h:
+                st.append((h, new_x))
+    
+        while len(st) > 0 and st[-1][0]:
+            old_h, old_x = st.pop()
+            max_area = max(max_area, (len(heights)-old_x)*old_h)
+        return max_area
     def largestRectangleAreaSlow(self, heights):
         """
         :type heights: List[int]
@@ -46,4 +47,4 @@ class Solution(object):
 
 sol = Solution()
 print(sol.largestRectangleArea([2,1,5,6,2,3]), 10)
-print(sol.largestRectangleArea([i for i in range(20000)]), 20000)
+print(sol.largestRectangleArea([i for i in range(20000)]), 100000000)
