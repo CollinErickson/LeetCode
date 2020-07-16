@@ -5,6 +5,10 @@ class Solution(object):
         :type t: str
         :rtype: str
         """
+        if t == "":
+          return True
+        if s == "":
+          return False
         L = 0
         R = 0
         d = {}
@@ -16,9 +20,9 @@ class Solution(object):
             tdict[tt] += 1
           else:
             tdict[tt] = 1
-        print(tdict)
+        #print(tdict)
         def valid():
-          print('in valid', tdict, d)
+          #print('in valid', tdict, d)
           for k in tdict.keys():
             if k not in d.keys() or d[k] < tdict[k]:
               return False
@@ -26,28 +30,39 @@ class Solution(object):
         shortest = False
         while True:
           isvalid = valid()
-          print("LR", L, R, isvalid)
+          #print("LR", L, R, isvalid)
           if isvalid:
-            print('in if valid', R - L, R, L, (shortest))
-            if  shortest is False or R-L < len(shortest):
-              #print('in the if')
+            #print('in if valid', R - L, R, L, (shortest))
+            if  shortest is False or R-L <= len(shortest):
+              #print('in the if, new shortest')
               shortest = s[L:R]
             #print('middle if')
             d[s[L]] -= 1
             L += 1
             #print('ending if valid')
           else:
-            print('in else', R, s, d)
+            if R == len(s):
+              break
+            #print('in else', R, s, d)
             d[s[R]] += 1
             R += 1
-          print('checking break')
-          if R == len(s):
-            break
-        print('ending', L, R, shortest, len(s))
+          #print('checking break')
+          #if R > len(s):
+          #  break
+        #print('check if', shortest, shortest is False)
+        if shortest is False:
+          #print("changing shortest")
+          shortest = ""
+        #print('ending', L, R, shortest, len(s))
         return shortest
 
 sol = Solution()
 print(sol.minWindow("ADOBECODEBANC", "ABC"))
+print(sol.minWindow("ADOBECODEBANC", "AA"))
+print(sol.minWindow("ADOBECODEBANC", "AAA"))
+print(sol.minWindow("ADOBECODEBANC", "EC"))
+print(sol.minWindow("ADOBECODEBANC", "ACC"))
+
 
 S = "ADOBECODEBANC"
 d = {"A": 1}
