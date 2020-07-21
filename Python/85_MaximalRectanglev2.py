@@ -6,8 +6,8 @@ class Solution(object):
     """
     if len(matrix) == 1 or len(matrix[0]) == 1:
       return 0
-    n = len(matrix)
-    m = len(matrix[0])
+    m = len(matrix)
+    n = len(matrix[0])
     left = [0 for i in range(n)]
     right = [n for i in range(n)]
     height = [0 for i in range(n)]
@@ -17,7 +17,27 @@ class Solution(object):
       cur_right = n
       # Compute height
       for j in range(n):
-        pass
+        if matrix[i][j] == "1":
+          height[j] += 1
+        else:
+          height[j] = 0
+      # Computer left, go left to right
+      for j in range(n):
+        if matrix[i][j] == "1":
+          left[j] = max(left[j], cur_left)
+        else:
+          left[j] = 0
+          cur_left = j+1
+      # Computer right, go right to left
+      for j in range(n-1,-1, -1):
+        if matrix[i][j] == "1":
+          right[j] = max(right[j], cur_right)
+        else:
+          right[j] = n
+          cur_right = j
+      for j in range(n):
+        maxarea = max(maxarea, (right[j]-left[j])*height[j])
+        
     return 1
       
 sol = Solution()
