@@ -8,12 +8,12 @@ class Solution(object):
     for i in range(len(matrix)):
       for j in range(len(matrix[0])):
         for i2 in range(i+1,len(matrix)+1):
-          breakout1 = False
+          #breakout1 = False
           # Check new values x[i2-1][]
           for j2 in range(j+1, len(matrix[0])+1):
-            if (i2-i) * (j2-j) <= biggest:
-              breakout1 = True
-              break
+            #if (i2-i) * (j2-j) <= biggest:
+            #  #breakout1 = True
+            #  continue #break
             #print(i,i2,j,j2)
             # Check that matrix[i:i2, j:j2] are all 1
             # Only check new j2, matrix[]
@@ -32,8 +32,8 @@ class Solution(object):
               # Is valid
               if (i2-i) * (j2-j) > biggest:
                 biggest = (i2-i) * (j2-j)
-          if breakout1:
-            break
+          #if breakout1:
+          #  break
     return biggest
         
 sol = Solution()
