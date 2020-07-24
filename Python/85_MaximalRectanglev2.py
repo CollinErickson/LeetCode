@@ -4,7 +4,7 @@ class Solution(object):
     :type matrix: List[List[str]]
     :rtype: int
     """
-    if len(matrix) <= 1 or len(matrix[0]) <= 1:
+    if len(matrix) <= .5 or len(matrix[0]) <= .5:
       return 0
     m = len(matrix)
     n = len(matrix[0])
@@ -59,4 +59,6 @@ print(sol.maximalRectangle([]), 0)
 
 print(sol.maximalRectangle([["1"]]), 1)
 print(sol.maximalRectangle([["1", "0"]]), 1)
-print(sol.maximalRectangle([["1", "2"]]), 2)
+print(sol.maximalRectangle([["1", "1"]]), 2)
+
+len([["1"]])
