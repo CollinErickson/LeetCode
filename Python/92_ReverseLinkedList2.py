@@ -5,10 +5,11 @@ class ListNode(object):
          self.next = next
      def __repr__(self):
          node = self
+         s = ''
          while node is not None:
-             print(node.val, end='\t')
+             s += str(node.val) + '\t'
              node = node.next
-         print('\n')
+         return s
 class Solution(object):
     def reverseBetween(self, head, m, n):
         """
@@ -17,6 +18,25 @@ class Solution(object):
         :type n: int
         :rtype: ListNode
         """
+        node = head
+        if m < 1:
+            return 'error m < 1', m
+        for i in range(m-1):
+            print('p1', i)
+            node = node.next
+        tail1 = node
+        node = node.next
+        head2 = node
+        tail2 = node
+        for i in range(n-m):
+            print('p2', i)
+            nodelast = node
+            node = node.next
+            head2 = node
+            head2.next = nodelast
+        head3 = node
+        tail1.next = head2
+        tail2.next = head3
         
         return head
 
@@ -34,6 +54,8 @@ l2.next = l3
 l3.next = l4
 l4.next = l5
 #print(l1)
+#print(l5)
 
 sol = Solution()
+print(sol.reverseBetween(l1, 2, 4))
 
