@@ -7,7 +7,10 @@ class ListNode(object):
          node = self
          s = ''
          while node is not None:
-             s += str(node.val) + '\t'
+             #print(node.val)
+             s += str(node.val) #+ ' => '
+             if node.next is not None:
+                 s += " => "
              node = node.next
          return s
 class Solution(object):
@@ -21,20 +24,31 @@ class Solution(object):
         node = head
         if m < 1:
             return 'error m < 1', m
-        for i in range(m-1):
-            print('p1', i)
+        for i in range(m-2):
+            #print('p1', i)
             node = node.next
         tail1 = node
         node = node.next
+        tail1.next = None
         head2 = node
         tail2 = node
+        node = node.next
+        tail2.next = None
         for i in range(n-m):
-            print('p2', i)
-            nodelast = node
-            node = node.next
-            head2 = node
-            head2.next = nodelast
+            #print('p2', node.val, i, head2)
+            #nodelast = node
+            #node = node.next
+            #head2 = node
+            #head2.next = nodelast
+            nextnode = node.next
+            newhead2 = node
+            oldhead2 = head2
+            head2 = newhead2
+            head2.next = oldhead2
+            node = nextnode
+        #print('p3', head)
         head3 = node
+        #print('p4', head2)
         tail1.next = head2
         tail2.next = head3
         
@@ -57,5 +71,5 @@ l4.next = l5
 #print(l5)
 
 sol = Solution()
-print(sol.reverseBetween(l1, 2, 4))
+print(sol.reverseBetween(l1, 2, 4), [1,4,3,2,5])
 
