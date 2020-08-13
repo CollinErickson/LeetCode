@@ -24,7 +24,7 @@ class Solution(object):
         if head.next is None:
             return head
         node = head
-        if m < 1:
+        if m <= 1:
             return 'error m < 1', m
         for i in range(m-2):
             #print('p1', i)
@@ -38,6 +38,10 @@ class Solution(object):
         tail2 = node
         node = node.next
         tail2.next = None
+        if node is None:
+            print("Failing with none node")
+            tail1.next = head2
+            return head1
         for i in range(n-m):
             print('p2', node.val, i, head2)
             #nodelast = node
