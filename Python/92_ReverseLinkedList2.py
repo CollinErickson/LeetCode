@@ -24,16 +24,19 @@ class Solution(object):
         if head.next is None:
             return head
         node = head
-        if m <= 1:
-            return 'error m < 1', m
+        #if m <= 1:
+        #    return 'error m < 1', m
         for i in range(m-2):
             #print('p1', i)
             node = node.next
         if node is None or node.next is None:
             return head
-        tail1 = node
-        node = node.next
-        tail1.next = None
+        if m == 1:
+            tail1 = None
+        else:
+            tail1 = node
+            node = node.next
+            tail1.next = None
         head2 = node
         tail2 = node
         node = node.next
@@ -43,7 +46,7 @@ class Solution(object):
             tail1.next = head2
             return head1
         for i in range(n-m):
-            print('p2', node.val, i, head2)
+            #print('p2', node.val, i, head2)
             #nodelast = node
             #node = node.next
             #head2 = node
@@ -57,7 +60,11 @@ class Solution(object):
         #print('p3', head)
         head3 = node
         #print('p4', head2)
-        tail1.next = head2
+        
+        if m == 1:
+            head = head2
+        else:
+            tail1.next = head2
         tail2.next = head3
         
         return head
@@ -94,4 +101,4 @@ print(sol.reverseBetween(l4, 1, 1), [4,5])
 l4 = ListNode(4)
 l5 = ListNode(5)
 l4.next = l5
-print(sol.reverseBetween(l4, 1, 2), [4,5])
+print(sol.reverseBetween(l4, 1, 2), [5,4])
