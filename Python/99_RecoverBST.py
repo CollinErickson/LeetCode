@@ -19,10 +19,39 @@ class Solution(object):
     e2 = None
     prevNode = None
     def recoverTree(self, root):
+      cur, prev, drops = root, TreeNode(float('-inf')), []
+      while cur:
+        if cur.left:
+          temp = cur.left
+          while temp.right and temp.right != cur:
+            temp = temp.right
+          if not temp.right:
+            temp.right, cur = cur, cur.left
+            continue
+          temp.right = None
+        if cur.val < prev.val:
+          drops.append((prev, cur))
+        prev, cur = cur, cur.right
+      drops[0][0].val, drops[-1][1].val = drops[-1][1].val, drops[0][0].val
+    def inorderMorris(self, root):
+      cur = root
+      while cur:
+        if cur.left:
+          temp = cur.left
+          while temp.right and temp.right != cur:
+            temp = temp.right
+          if not temp.right:
+            temp.right, cur = cur, cur.left
+            continue
+          temp.right = None
+        print(cur.val)
+        cur = cur.right
+    def recoverTreeOld(self, root):
         """
         :type root: TreeNode
         :rtype: None Do not return anything, modify root in-place instead.
         """
+        self.e1, self.e2, self.prevNode = None, None, None
         #print('in rc t')
         self.traverse(root)
         if self.e1 is None or self.e2 is None:
