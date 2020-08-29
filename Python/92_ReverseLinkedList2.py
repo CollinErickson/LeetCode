@@ -24,6 +24,8 @@ class Solution(object):
         if head.next is None:
             return head
         node = head
+        if m == n:
+            return head
         #if m <= 1:
         #    return 'error m < 1', m
         for i in range(m-2):
@@ -102,3 +104,9 @@ l4 = ListNode(4)
 l5 = ListNode(5)
 l4.next = l5
 print(sol.reverseBetween(l4, 1, 2), [5,4])
+
+
+l4 = ListNode(4)
+l5 = ListNode(5)
+l4.next = l5
+print(sol.reverseBetween(l4, 2, 2), [4,5])
