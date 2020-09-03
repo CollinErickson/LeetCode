@@ -12,6 +12,7 @@ class TreeNode(object):
        if self.right is not None:
          s += "[" + str(self.right) + "]"
        return s
+# https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/discuss/221681/Don't-use-top-voted-Python-solution-for-interview-here-is-why.
 class Solution(object):
     def buildTree(self, inorder, postorder):
         """
@@ -19,13 +20,19 @@ class Solution(object):
         :type inorder: List[int]
         :rtype: TreeNode
         """
-        if inorder:
-          i = inorder.index(preorder.pop(0))
-          root = TreeNode(inorder[i])
-          root.left = self.buildTree(preorder, inorder[0:i])
-          root.right = self.buildTree(preorder, inorder[(i+1):])
-          return root
-        return None
+        map_inorder=  {}
+        for i, val in enumerate(inorder):
+            map_inorder[val] = i
+        def recur(low, high):
+            if low > high:
+                return None
+            x = TreeNode(postorder.pop())
+            mid = map_inorder[x.val]
+            x.right = recur(mid+1, high)
+            x.left  = recur(low, mid-1)
+            return x
+            
+        return recur(0, len(inorder)-1)
         
 sol = Solution()
 
