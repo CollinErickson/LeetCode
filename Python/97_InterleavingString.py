@@ -12,21 +12,22 @@ class Solution(object):
           return s2==s3
         if len(s2) == 0:
           return s1==s3
-        print(s1, s2, s3)
-        tab = [[0 for i in range(len(s2))] for j in range(len(s1))]
+        #print(s1, s2, s3)
+        tab = [[0 for i in range(len(s2)+1)] for j in range(len(s1)+1)]
         
-        for i in range(len(s1)):
-          for j in range(len(s2)):
+        for i in range(len(s1)+1):
+          for j in range(len(s2)+1):
             #print(i,j, len(s1), len(s2))
             if i==0 and j==0:
               tab[i][j] = True
             elif i==0:
-              tab[i][j] = tab[i][j-1] and s2[j]==s3[j]
+              tab[i][j] = tab[i][j-1] and s2[j-1]==s3[j-1]
             elif j==0:
-              tab[i][j] = tab[i-1][j] and s1[i]==s3[i]
+              tab[i][j] = tab[i-1][j] and s1[i-1]==s3[i-1]
             else:
-              tab[i][j] = (tab[i][j-1] and s2[j]==s3[i+j]) or (tab[i-1][j] and s1[i]==s3[i+j])
-        return tab[len(s1)-1][len(s2)-1]
+              tab[i][j] = (tab[i][j-1] and s2[j-1]==s3[i+j-1]) or (tab[i-1][j] and s1[i-1]==s3[i+j-1])
+        #print(tab)
+        return tab[len(s1)][len(s2)]
     def slow_isInterleave(self, s1, s2, s3):
         if s3 == "":
           return s1 == "" and s2 == ""
@@ -50,8 +51,11 @@ print(sol.isInterleave("a", "a", "aa"), True)
 print(sol.isInterleave("a", "a", "a"), False)
 print(sol.isInterleave("", "", ""), True)
 print(sol.isInterleave("a", "", "a"), True)
+print(sol.isInterleave("a", "", "a"), True)
 print(sol.isInterleave(
   "bbbbbabbbbabaababaaaabbababbaaabbabbaaabaaaaababbbababbbbbabbbbababbabaabababbbaabababababbbaaababaa",
 "babaaaabbababbbabbbbaabaabbaabbbbaabaaabaababaaaabaaabbaaabaaaabaabaabbbbbbbbbbbabaaabbababbabbabaab",
 "babbbabbbaaabbababbbbababaabbabaabaaabbbbabbbaaabbbaaaaabbbbaabbaaabababbaaaaaabababbababaababbababbbababbbbaaaabaabbabbaaaaabbabbaaaabbbaabaaabaababaababbaaabbbbbabbbbaabbabaabbbbabaaabbababbabbabbab"
 ), True)
+
+print(sol.isInterleave("aa", "ab", "abaa"), True)
