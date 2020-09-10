@@ -23,9 +23,20 @@ class Solution(object):
         :type nums: List[int]
         :rtype: TreeNode
         """
-        head = TreeNode(nums[0])
+        if len(nums) == 0:
+          return None
+        if len(nums) == 1:
+          return TreeNode(nums[0])
+        head = TreeNode(nums[len(nums)//2])
+        head.left  = self.sortedArrayToBST(nums[0:(len(nums)//2)])
+        if len(nums) > 2:
+          head.right = self.sortedArrayToBST(nums[(len(nums)//2+1):])
         return head        
 
 sol = Solution()
 
 print(sol.sortedArrayToBST([-10,-3,0,5,9]))
+
+print(sol.sortedArrayToBST([-10,-3,0,5,9,11]))
+print(sol.sortedArrayToBST([-10,-3,0,5,9,11,12]))
+print(sol.sortedArrayToBST([]))
