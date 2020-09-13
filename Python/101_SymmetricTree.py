@@ -31,7 +31,15 @@ class Solution(object):
         if root.left.val != root.right.val:
           return False
         
+        return self.isReverse(root.left, root.right)
+    def isReverse(self, r1, r2):
+      if r1 is None and r2 is None:
         return True
+      if r1 is None or r2 is None:
+        return False
+      if r1.val != r2.val:
+        return False
+      return self.isReverse(r1.left, r2.right) and self.isReverse(r1.right, r2.left)
 
 sol = Solution()
 
@@ -41,3 +49,13 @@ s3 = TreeNode(3)
 s1.left = s2
 s1.right = s3
 print(sol.isSymmetric(s1), False)
+print(sol.isSymmetric(s2), True)
+
+
+s1 = TreeNode(1)
+s2 = TreeNode(2)
+s3 = TreeNode(2)
+s1.left = s2
+s1.right = s3
+print(sol.isSymmetric(s1), True)
+print(sol.isSymmetric(s2), True)
