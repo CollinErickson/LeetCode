@@ -33,7 +33,7 @@ class Solution(object):
         :type head: ListNode
         :rtype: TreeNode
         """
-        #print("in it", head, bst)
+        #print("starting sltbst", head, bst, leftdepth)
         if head is None:
           return bst
         newbst = TreeNode(head.val)
@@ -48,12 +48,12 @@ class Solution(object):
           outbst = self.sortedListToBST(head = head, bst=newbst, leftdepth=1)
           return outbst
         newbst.left = bst
-        leftdepth += 1
         listright = head
         nodestoputonright = leftdepth * (leftdepth + 1) // 2
+        leftdepth += 1
         newhead = head
         lastofnodestoputonright = None
-        #print('startling loop', newbst, listright)
+        #print('startling loop', newbst, nodestoputonright, listright)
         for i in range(nodestoputonright):
           #print('i', i)
           lastofnodestoputonright = newhead
