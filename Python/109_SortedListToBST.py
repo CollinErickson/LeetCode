@@ -28,7 +28,7 @@ class TreeNode(object):
        return s
        
 class Solution(object):
-    def sortedListToBST(self, head, bst=None, leftdepth=0):
+    def sortedListToBSTBad(self, head, bst=None, leftdepth=0):
         """
         :type head: ListNode
         :rtype: TreeNode
@@ -68,6 +68,37 @@ class Solution(object):
         #bst = []
         #print('fullbst is', fullbst)
         return fullbst
+    def sortedListToBST(self, head, num=None):
+      if head is None:
+        return None
+      if head.next is None:
+        return TreeNode(head.val)
+      if num is None:
+        print('counting')
+        num = 1
+        node = head
+        while node.next is not None:
+          num += 1
+          node = node.next
+      lefthead = head
+      indexright = (num-1) - (num-1) // 2
+      righthead = head
+      lefttail = None
+      for i in range(indexright):
+        lefttail = righthead
+        righthead = righthead.next
+      lefttail.next = None
+      print('left', lefthead, 'right', righthead)
+      middlehead = righthead
+      righthead = righthead.next
+      middlehead.next = None
+      
+      leftbst = self.sortedListToBST(lefthead, num = indexright)
+      rightbst = self.sortedListToBST(righthead, num = num - 1 - indexright)
+      newbst = TreeNode(middlehead.val)
+      newbst.left = leftbst
+      newbst.right = rightbst
+      return newbst
 
 sol = Solution()
 
@@ -117,8 +148,8 @@ n3.next = n4
 n4.next = n5
 n5.next = n6
 n6.next = n7
-n7.next = n8
-n8.next = n9
-print(n1)
+#n7.next = n8
+#n8.next = n9
+#print(n1)
 print('sol is', sol.sortedListToBST(n1))
 
