@@ -29,7 +29,7 @@ class Solution(object):
         return not (xx is False)
     def hRL(self, root):
       if root is None:
-        return (0,0)
+        return (0,) #(0,0)
       
       hR = self.hRL(root.right)
       hL = self.hRL(root.left)
@@ -38,7 +38,8 @@ class Solution(object):
         return False
       if  max(hL + hR) - min(hL + hR) > 1:
         return False
-      return (1 + min(hR + hL), 1 + max(hR + hL))
+      return (1 + max(hR + hL),)
+      #return (1 + min(hR + hL), 1 + max(hR + hL))
 min(0,1)
 sol = Solution()
 
@@ -55,11 +56,20 @@ print(sol.isBalanced(n1), True)
 n1.left = n2
 print(sol.isBalanced(n1), True)
 
-n2.left = n3
+n2.left = n4
 print(n1, sol.isBalanced(n1), False)
 
-n2.right = n4
+n2.right = n5
 print(n1, sol.isBalanced(n1), False)
 
-n1.right = n5
+n1.right = n3
 print(n1, sol.isBalanced(n1), True)
+
+n3.left = n6
+print(n1, sol.isBalanced(n1), True)
+
+n4.left = n7
+print(n2, sol.isBalanced(n2), True)
+print(n3, sol.isBalanced(n3), True)
+print(n1, sol.isBalanced(n1), True)
+
