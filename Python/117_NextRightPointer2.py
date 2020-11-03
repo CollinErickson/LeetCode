@@ -26,6 +26,7 @@ class Node(object):
        q = queue.Queue()
        if self.left is not None:
            q.put(self.left)
+       if self.right is not None:
            q.put(self.right)
        #print(dir(q))
        while q.qsize() > 0:
@@ -36,6 +37,7 @@ class Node(object):
          s += str(x.next.val) if x.next is not None else "#"
          if x.left is not None:
              q.put(x.left)
+         if x.right is not None:
              q.put(x.right)
        return s
 
@@ -45,20 +47,46 @@ class Solution(object):
         :type root: Node
         :rtype: Node
         """
+        #print("Start:", root)
+        #if root.val == 2:
+          #print(5, root.next)
         if root is not None:
           if root.left is not None and root.right is not None:
+            #print("LR", root)
             root.left.next = root.right
             if root.next:
-                root.right.next = root.next.left
+                root.right.next = self.find_next(root.next) #root.next.left if root.next.left is not None else root.next.right
+            
+            #if root.val == 2:
+            #  print("at 2:", root.next)
             self.connect(root.right)
             self.connect(root.left)
           elif root.left is not None: # Only has left
-            root.left.next = root.next.left
+            #print("LL", root)
+            if root.next:
+              root.left.next = self.find_next(root.next) #root.next.left if root.next.left is not None else root.next.right
             self.connect(root.left)
           elif root.right is not None: # Only has right
-            root.right.next = root.next.left
+            #print("RR", root)
+            #print("-", root.next)
+            if root.next:
+              root.right.next = self.find_next(root.next) #root.next.left if root.next.left is not None else root.next.right
             self.connect(root.right)
         return root
+    def find_next(self, root, down=None):
+        #print("find", root)
+        if root is None:
+          return None
+        #if down == 0:
+        #  return root
+        if root.left:
+          return root.left #self.find_next(root=root.left)#, down=down-1)
+        if root.right:
+          return root.right #self.find_next(root=root.right)#, down=down-1)
+        if root.next is None:
+          return None
+        #print("FAIL")
+        return self.find_next(root.next) #, down=down)
 [] is None
 sol = Solution()
 
@@ -85,7 +113,32 @@ n2.left = n4
 n2.right = n5
 #n3.left = n6
 n3.right = n7
+print('fn', n1, sol.find_next(n2))
 
 sol.connect(n1)
-print(n1.nexts())
+print(n1.nexts(), "#3#57#")
 print(n2.next)
+
+
+n1 = Node(1)
+n2 = Node(2)
+n3 = Node(3)
+n4 = Node(4)
+n5 = Node(5)
+n6 = Node(6)
+n7 = Node(7)
+n8 = Node(8)
+n1.left = n2
+n1.right = n3
+n2.left = n4
+n2.right = n5
+#n3.left = n6
+n3.right = n6
+n4.left = n7
+n6.right = n8
+print('fn', n1, sol.find_next(n2))
+
+print("===========")
+sol.connect(n1)
+print(n1.nexts(), "# 3# 56# 8#")
+print(n5.next)
