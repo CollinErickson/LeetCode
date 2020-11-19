@@ -42,3 +42,6 @@ print(sol.maxProfit([3,3,5,0,0,3,1,4]), 6)
 print(sol.maxProfit([1,2,3,4,5]), 4)
 print(sol.maxProfit([7,6,4,3,1]), 0)
 
+print("Starting slow one...")
+print(sol.maxProfit([i for i in range(10000,-1,-1)] + [0 for i in range(1000)]), 0)
+
