@@ -12,7 +12,9 @@ class Solution:
       queue, visited = deque([(beginWord, 1, [beginWord])]), set()
       while queue:
         word, steps, ladder = queue.popleft()
-        if word not in visited:
+        #print(word, steps, ladder)
+        if len(allsolutions) == 0 or steps <= len(allsolutions[0]): #word not in visited:
+          #print("--not skip")
           visited.add(word)
           if word == endWord:
             allsolutions += [ladder] #return ladder
@@ -27,8 +29,9 @@ from collections import deque
 
 sol = Solution()
 
-print(sol.findLadders("hit", "cog", ["hot","dot","dog","lot","log","cog"]), 5)
-print(sol.findLadders("hit", "dog", ["hot","dog"]), 0)
+print(sol.findLadders("hit", "cog", ["hot","dot","dog","lot","log","cog"]), "\n",
+[['hit', 'hot', 'dot', 'dog', 'cog'], ['hit', 'hot', 'lot', 'log', 'cog']] )
+print(sol.findLadders("hit", "dog", ["hot","dog"]), [])
 
 #dir(set())
 
