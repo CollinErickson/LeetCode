@@ -16,13 +16,33 @@ class TreeNode(object):
        if self.right is not None:
          s += "[" + str(self.right) + "]"
        return s
+import queue as QQ
 class Solution(object):
+  q1 = QQ.Queue()
+  q2 = QQ.Queue()
   def levelOrder(self, root):
     """
     :type root: TreeNode
     :rtype: List[List[int]]
     """
-    a = []
+    if root is None:
+      return []
+    a = [[root.val]]
+    if root.left is not None:
+      self.q1.put([root.left, 1])
+    if root.right is not None:
+      self.q1.put([root.right, 1])
+    while not self.q1.empty():
+      n, lev = self.q1.get()
+      if len(a) <= lev:
+        a.append([])
+      #print('al', a, lev)
+      a[lev] += [n.val]
+      if n.left is not None:
+        self.q1.put([n.left, lev+1])
+      if n.right is not None:
+        self.q1.put([n.right, lev+1])
+    
     return a
 
 
