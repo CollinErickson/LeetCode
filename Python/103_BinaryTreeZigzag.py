@@ -18,8 +18,6 @@ class TreeNode(object):
        return s
 import queue as QQ
 class Solution(object):
-  q1 = QQ.LifoQueue()
-  q2 = QQ.Queue()
   def zigzagLevelOrder(self, root):
     """
     :type root: TreeNode
@@ -28,30 +26,41 @@ class Solution(object):
     if root is None:
       return []
     a = [[root.val]]
+    
+    q1 = QQ.LifoQueue()
+    q2 = QQ.LifoQueue()
     if root.left is not None:
-      self.q1.put([root.left, 1])
+      #print('L put in ', root.left.val)
+      q1.put([root.left, 1])
     if root.right is not None:
-      self.q1.put([root.right, 1])
+      #print('R put in ', root.right.val)
+      q1.put([root.right, 1])
     level = 1
-    #self.q2 = 
-    while not self.q1.empty() or not self.q2.empty():
-      while not self.q1.empty():
-        #print('starting level', level, a)
-        n, lev = self.q1.get()
+    #q2 = 
+    while not q1.empty() or not q2.empty():
+      #print('starting level', level, a)
+      while not q1.empty():
+        n, lev = q1.get()
         #print('  got', n, lev)
         if len(a) <= lev:
           a.append([])
         #print('al', a, lev)
         a[lev] += [n.val]
-        if n.left is not None:
-          self.q2.put([n.left, lev+1])
-        if n.right is not None:
-          self.q2.put([n.right, lev+1])
-      self.q1 = self.q2
+        if lev%2 == 0:
+          if n.left is not None:
+            q2.put([n.left, lev+1])
+          if n.right is not None:
+            q2.put([n.right, lev+1])
+        else:
+          if n.right is not None:
+            q2.put([n.right, lev+1])
+          if n.left is not None:
+            q2.put([n.left, lev+1])
+      q1 = q2
       if level%2 == 0:
-        self.q2 = QQ.LifoQueue()
+        q2 = QQ.LifoQueue()
       else:
-        self.q2 = QQ.Queue()
+        q2 = QQ.LifoQueue()
       level += 1
     
     return a
@@ -73,3 +82,18 @@ s3.left = s4
 s3.right = s5
 print(s1)
 print(sol.zigzagLevelOrder(s1), [[3],[20,9], [15,7]])
+
+
+sol = Solution()
+
+s1 = TreeNode(1)
+s2 = TreeNode(2)
+s3 = TreeNode(3)
+s4 = TreeNode(4)
+s5 = TreeNode(5)
+s1.left = s2
+s1.right = s3
+s2.left = s4
+s3.right = s5
+print(s1)
+print(sol.zigzagLevelOrder(s1), [[1],[3,2], [4,5]])
