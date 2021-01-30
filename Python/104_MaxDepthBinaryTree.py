@@ -40,7 +40,7 @@ s1.left = s2
 s1.right = s3
 s3.left = s4
 s3.right = s5
-print(s1)
+#print(s1)
 print(sol.maxDepth(s1), 3)
 print(sol.maxDepth(s5), 1)
 print(sol.maxDepth(s5.left), 0)
@@ -57,5 +57,5 @@ s1.left = s2
 s1.right = s3
 s2.left = s4
 s3.right = s5
-print(s1)
+#print(s1)
 print(sol.maxDepth(s1), 3)
