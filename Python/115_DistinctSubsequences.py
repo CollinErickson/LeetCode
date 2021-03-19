@@ -17,6 +17,8 @@ class Solution(object):
             #print('ij are', i,j, s[0:(i+1)], t[0:(j+1)])
             if i == 0:
               m[i][j] = int(s[0:(i+1)] == t[0:(j+1)])
+            elif j == 0:
+              m[i][j] = m[i-1][j] + int(t[0] == s[i])
             else:
               m[i][j] = m[i-1][j]
               if s[i] == t[j]:
@@ -26,8 +28,8 @@ class Solution(object):
 
 sol = Solution()
 
-#print(sol.numDistinct("r", "r"), 1)
-#print(sol.numDistinct("r", "rr"), 0)
+print(sol.numDistinct("r", "r"), 1)
+print(sol.numDistinct("r", "rr"), 0)
 print(sol.numDistinct("rr", "r"), 2)
 print(sol.numDistinct("rabbbit", "rabbit"), 3)
 print(sol.numDistinct("babgbag", "bag"), 5)
