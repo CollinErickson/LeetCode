@@ -1,6 +1,7 @@
 class Solution:
   def evalRPN(self, tokens):
-    q = Q.Queue()
+    #q = Q.Queue()
+    q = Q.LifoQueue()
     i = 0
     while i < len(tokens):
       if tokens[i] in ("+", "*", "/", "-"):
@@ -13,10 +14,14 @@ class Solution:
         elif tokens[i] == "-":
           c = a - b
         elif tokens[i] == "/":
-          c = a // b
-        print('putting c', c, a, b)
+          if a*b >= 0:
+            c = a // b
+          else:
+            c = -(-a // b)
+        #print('putting c', c, a, b)
         q.put(c)
       else:
+        #print('putting', tokens[i])
         q.put(tokens[i])
       i += 1
     #q.put(tokens[0])
