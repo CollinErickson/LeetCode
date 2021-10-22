@@ -3,6 +3,20 @@ class Solution:
     if len(nums) == 1:
       return 0
     if len(nums) == 2:
+      return int(nums[0] < nums[1])
+    # At least 3 elements
+    mid = len(nums) // 2
+    #print(nums, mid)
+    if nums[mid] > nums[mid-1] and nums[mid] > nums[mid+1]:
+      return mid
+    if nums[mid] > nums[mid-1]:
+      return mid + self.findPeakElement(nums[mid:len(nums)])
+    return self.findPeakElement(nums[0:mid])
+    
+  def findPeakElementLinear(self, nums):
+    if len(nums) == 1:
+      return 0
+    if len(nums) == 2:
       if nums[0] > nums[1]:
         return 0
       elif nums[1] > nums[0]:
