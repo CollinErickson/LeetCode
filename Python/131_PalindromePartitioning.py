@@ -2,17 +2,19 @@ class Solution:
     def partition(self, s: str):
       
       x = []
-      print('partition', s, len(s))
+      #print('partition', s, len(s))
       for i in range(1,len(s)):
-        print('i is', i)
+        #print('i is', i)
         a = s[:i]
-        print('a is', a)
+        #print('a is', a)
         if self.isPalindrome(a):
-          print("palind", a)
+          #print("palind", a)
           x2 = self.partition(s[i:])
           if len(x2) > 0:
-            print("x2 is", x2)
-        
+            #print("x2 is", x2)
+            x += [[a] + x3 for x3 in x2]
+      if self.isPalindrome(s):
+        x += [[s]]
       return x
     def isPalindrome(self, s):
       for i in range((len(s))//2):
