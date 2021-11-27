@@ -3,13 +3,15 @@ class Solution:
     if k <= .5 or len(prices) < .5:
       return 0
     # T * (k+1) * 2: T days, 0-k completed buys (must be sold), 0 if not holding 1 if nolding
-    x = [[[0, 0] for i in range(0,k+1)] for t in range(len(prices))]
+    x = [[[-10000 if i>0 else 0, -10000] for i in range(0,k+1)] for t in range(len(prices))]
+    # Start at 0
+    # x[0][0][0] = 0
     # On day 0, can buy
     x[0][0][1] = -prices[0]
     for t in range(1, len(prices)):
       # First buy
       # x[t][0][1] = -prices[t]
-      for i in range(0, k):
+      for i in range(0, k+1):
         #print('ti', t, i)
         # State of not owning: can have not owned prev, or just sold
         # if i == 0:
@@ -27,11 +29,11 @@ class Solution:
     return max(profit)
 
 sol = Solution()
-# print(sol.maxProfit(k = 2, prices = [2,4,1]), 2)
-# print(sol.maxProfit(k = 2, prices = [3,2,6,5,0,3]), 4)
+print(sol.maxProfit(k = 2, prices = [2,4,1]), 2)
+print(sol.maxProfit(k = 2, prices = [3,2,6,5,0,3]), 7)
 print(sol.maxProfit(1, [2,4,1,0,5,0,7,7,8,9,32,2,4,6,2,4,6,2,4,6,2,2,4,57,7,4,2,1]), 57)
-# print(sol.maxProfit(2, [2,4,1,0,5,0,7,7,8,9,32,2,4,6,2,4,6,2,4,6,2,2,4,57,7,4,2,1]), 87)
-# # print(sol.maxProfit(5, [2,4,1,0,5,0,7,7,8,9,32,2,4,6,2,4,6,2,4,6,2,2,4,57,7,4,2,1]), 100)
-# print(sol.maxProfit(5, [2,4,1,0,5,0,7,7,8,9,32,2,4,6,2,4,6,2,4,6,2,2,4,57,7,4,2,1]), 100)
+print(sol.maxProfit(2, [2,4,1,0,5,0,7,7,8,9,32,2,4,6,2,4,6,2,4,6,2,2,4,57,7,4,2,1]), 87)
+print(sol.maxProfit(5, [2,4,1,0,5,0,7,7,8,9,32,2,4,6,2,4,6,2,4,6,2,2,4,57,7,4,2,1]), 100)
+print(sol.maxProfit(8, [2,4,1,0,5,0,7,7,8,9,32,2,4,6,2,4,6,2,4,6,2,2,4,57,7,4,2,1]), 106)
 # print(sol.maxProfit(), )
 # print(sol.maxProfit(), )
